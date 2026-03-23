@@ -1,0 +1,21 @@
+# --- Crítica Existencial y Neurodivergencia ---
+https://www.youtube.com/feeds/videos.xml?channel_id=UCyQyPhi2n-olE07cBgiLMMw # Long Soul System
+https://www.youtube.com/feeds/videos.xml?channel_id=UCxnSk9Utd4O7bqQbThHvoUg # EXISTIR DUELE
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0AQmvuKZtjr7cC8iSJg6Vw # Valeria Angola
+https://www.youtube.com/feeds/videos.xml?channel_id=UCxm5R1HpFyaey9lmnYCVO9g # Bea Sánchez
+
+# --- PRENSA HEGEMÓNICA OCCIDENTAL (Para Contraste de Narrativas) ---
+https://rss.nytimes.com/services/xml/rss/nyt/World.xml # The New York Times
+https://www.economist.com/international/rss.xml # The Economist
+https://feeds.bbci.co.uk/mundo/rss.xml # BBC News Mundo
+https://rss.dw.com/rdf/rss-sp-all # Deutsche Welle (DW Español)
+https://www.france24.com/es/rss # France 24 Español
+https://rsshub.app/apnews/topics/ap-top-news # AP News
+https://efe.com/feed/ # Agencia EFE
+
+# --- PRENSA MULTIPOLAR Y SUR GLOBAL (Contrahegemónicas) ---
+https://actualidad.rt.com/rss # RT en Español
+https://sputniknews.lat/export/rss2/archive/index.xml # Sputnik Mundo
+https://spanish.news.cn/rss.xml # Xinhua Español
+https://es.irna.ir/rss # IRNA - Agencia de Noticias de la Rep. Islámica
+https://www.aljazeera.com/xml/rss/all.xml # Al Jazeera

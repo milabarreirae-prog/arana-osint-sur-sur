@@ -1,0 +1,47 @@
+[Unit]
+Description=Araña OSINT Sur-Sur — Demonio de recolección y curación OSINT
+Documentation=https://github.com/sursur/arana-osint-sur-sur
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+# Ejecutable del demonio
+ExecStart=/usr/sbin/sur-sur-daemon --config=/etc/sursur/sursur_config.ini
+
+# Apagado graceful
+ExecStop=/bin/kill -SIGTERM $MAINPID
+TimeoutStopSec=30
+
+# Reinicio automático
+Restart=always
+RestartSec=10
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Seguridad: modo permisivo para depuración en WSL2
+NoNewPrivileges=false
+
+# Directorios accesibles (lectura/escritura)
+ReadWritePaths=/var/lib/sursur /var/log/sursur /etc/sursur
+
+# Límites de recursos
+LimitNOFILE=65535
+LimitNPROC=4096
+
+# Logging vía journal
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=sursur-daemon
+
+# Variables de entorno (GPU + internacionalización)
+Environment=LANG=es_CL.UTF-8
+Environment=LC_ALL=C.UTF-8
+Environment=LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/local/cuda/lib64
+Environment=PATH=/usr/lib/wsl/lib:/usr/local/cuda/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,40 @@
+{
+  "network": {
+    "max_jumps": 3,
+    "timeout_ms": 5000,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 SursurSpider/1.0",
+    "strict_sur_sur_filter": true
+  },
+  "sources": {
+    "contrahegemonic_seeds": [
+      "https://actualidad.rt.com/rss",
+      "https://sputniknews.lat/export/rss2/archive/index.xml",
+      "https://www.telesurtv.net/rss/index.xml"
+    ],
+    "hegemonic_contrast_seeds": [
+      "https://feeds.aarp.org/rss/main.xml",
+      "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+    ],
+    "target_keywords": ["BRICS", "soberania", "multipolar", "geopolitica", "hegemonia", "OIEA", "litio", "dolarizacion"]
+  },
+  "llm": {
+    "model_name": "qwen2.5-coder:7b",
+    "endpoint": "http://localhost:11434/api/generate",
+    "temperature": 0.2,
+    "context_window": 8192,
+    "system_prompt": "SYSTEM PROMPT MAESTRO [V2026.3.22.FINAL]\nEstado: ALERTA ROJA MÉDICA (FASE 5) / PROTOCOLO ANTI-SESGO ACTIVADO\n\n1. DIRECTIVAS: Tono objetivo. Verificación exhaustiva. Honestidad epistémica obligatoria.\n2. CONTEXTO: Camila Mhuriel. Arquitecta TI. Filtro de información estricto.\n3. AXIOMA CERO: Curaduría Sur-Sur. Rechazo a hegemonía.\n4. FILTRO EPISTÉMICO (NEWSGATE): Eres un firewall de información.\n- RECHAZO AUTOMÁTICO INFRANQUEABLE (aprobado: false, relevancia: BAJA): Queda estrictamente prohibido aprobar noticias sobre deportes, hazañas personales, aventuras, curiosidades, videos virales o eventos de interés humano individual. Este es un Radar Geopolítico de inteligencia dura. Si el texto no aborda conflictos asimétricos, economía política, soberanía o descolonialidad a nivel macroestatal, debe ser DESCARTADO de inmediato por Frivolidad.\n- APROBACIÓN (aprobado: true, relevancia: ALTA/MEDIA): Conflictos asimétricos, soberanía tecnológica, economía política, desdolarización.\n5. PROTOCOLO DE SALIDA ESTRICTO:\nDebes emitir ÚNICAMENTE un objeto JSON plano con las siguientes claves exactas, sin anidaciones:\n\"aprobado\" (boolean),\n\"motivo_rechazo\" (string),\n\"relevancia\" (string: ALTA, MEDIA, BAJA),\n\"clasificacion\" (string: HEGEMONICA, CONTRAHEGEMONICA, HIBRIDA),\n\"justificacion_seleccion\" (string),\n\"autor\" (string),\n\"nivel_autoridad\" (string: Academico, Experto, Agencia, Desconocido),\n\"tema_principal\" (string),\n\"hashtags\" (array of strings),\n\"resumen\" (string),\n\"texto_completo_curado\" (string),\n\"falacias_detectadas\" (array of strings),\n\"cita_apa7\" (string)."
+  },
+  "persistence": {
+    "sqlite_path": "/var/lib/sursur/db/graph.db"
+  },
+  "media": {
+    "output_dir": "/var/lib/sursur/media",
+    "ffmpeg_path": "/usr/bin/ffmpeg",
+    "yt_dlp_path": "/usr/local/bin/yt-dlp",
+    "max_filesize_mb": 50,
+    "max_resolution": "720p",
+    "bitrate_audio": 128,
+    "formato_audio": "mp3",
+    "formato_subtitulos": "vtt"
+  }
+}

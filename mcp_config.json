@@ -1,0 +1,24 @@
+{
+    "mcpServers": {
+        "entroly": {
+            "command": "entroly",
+            "args": [
+                "."
+            ],
+            "env": {
+                "ENTROLY_ENGINE": "rust",
+                "ENTROLY_INCLUDE": "*.cpp,*.hpp,*.h"
+            }
+        },
+        "context-mode": {
+            "command": "node",
+            "args": [
+                "./claude-context-mode/build/index.js"
+            ],
+            "env": {
+                "CONTEXT_MODE_SANDBOX": "true",
+                "CONTEXT_MODE_MAX_OUTPUT": "5000"
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+# ============================================================================
+# Araña OSINT Sur-Sur — Semillas RSS Iniciales
+# Ubicación estándar: /etc/sursur/seeds.txt
+# Formato: una URL de feed RSS/Atom por línea
+# Líneas que comienzan con '#' son comentarios
+# ============================================================================
+
+# ── Fuentes Latinoamericanas ────────────────────────────────────────────────
+https://www.telesurtv.net/rss/
+https://www.nodal.am/feed/
+https://www.celag.org/feed/
+https://rebelion.org/feed/
+
+# ── Fuentes Árabes / Medio Oriente ─────────────────────────────────────────
+https://www.aljazeera.com/xml/rss/all.xml
+https://www.middleeasteye.net/rss
+
+# ── Fuentes Africanas ──────────────────────────────────────────────────────
+https://www.pambazuka.org/rss.xml
+
+# ── Fuentes Multilingües Independientes ─────────────────────────────────────
+https://www.democracynow.org/democracynow.rss
+https://theintercept.com/feed/?rss
+https://www.counterpunch.org/feed/
+
+# ── Fuentes Caribeñas ──────────────────────────────────────────────────────
+https://haitiantimes.com/feed/

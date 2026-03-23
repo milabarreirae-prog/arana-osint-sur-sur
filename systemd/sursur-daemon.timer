@@ -1,0 +1,12 @@
+[Unit]
+Description=Timer para Araña OSINT Sur-Sur (Orquestación Temporal y Control OOM)
+
+[Timer]
+# Ejecutar 5 minutos después del arranque y luego cada 45 minutos
+OnBootSec=5min
+OnUnitActiveSec=45min
+RandomizedDelaySec=5min
+Unit=sursur-daemon.service
+
+[Install]
+WantedBy=timers.target

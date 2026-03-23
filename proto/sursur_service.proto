@@ -1,0 +1,273 @@
+// ============================================================================
+// Araña OSINT Sur-Sur — Definición de Servicios gRPC
+// Protocolo de comunicación entre la interfaz (CLI/GUI) y el demonio core.
+// ============================================================================
+syntax = "proto3";
+
+package sursur.v1;
+
+option cc_enable_arenas = true;
+
+// ── Servicio de la Araña (Spider / Crawler) ─────────────────────────────────
+// Gestiona la ingesta de semillas RSS y el rastreo BFS de contenido web.
+service SpiderService {
+    // Enviar una nueva semilla RSS para rastreo
+    rpc EnviarSemilla(SemillaRequest) returns (SemillaResponse);
+
+    // Consultar el estado actual de un rastreo en curso
+    rpc ObtenerEstadoRastreo(EstadoRastreoRequest) returns (EstadoRastreoResponse);
+
+    // Flujo continuo de URLs descubiertas durante el rastreo
+    rpc TransmitirDescubrimientos(EstadoRastreoRequest) returns (stream DescubrimientoEvent);
+}
+
+// ── Servicio del Evaluador (LLM / RAG) ─────────────────────────────────────
+// Evaluación semántica de documentos mediante inferencia LLM local.
+service EvaluatorService {
+    // Evaluar el rigor analítico de un documento
+    rpc EvaluarDocumento(DocumentoRequest) returns (EvaluacionResponse);
+
+    // Búsqueda RAG contra el corpus local de PDFs
+    rpc BusquedaRAG(ConsultaRAGRequest) returns (ResultadoRAGResponse);
+
+    // Traducir y resumir contenido multilingüe
+    rpc TraducirContenido(TraduccionRequest) returns (TraduccionResponse);
+}
+
+// ── Servicio de Medios (Audio / Video / Subtítulos) ────────────────────────
+// Procesamiento asíncrono de fragmentos multimedia.
+service MediaService {
+    // Extraer un fragmento de audio/video por marcas de tiempo
+    rpc ExtraerFragmento(FragmentoRequest) returns (FragmentoResponse);
+
+    // Generar subtítulos VTT/SRT en español para un fragmento
+    rpc GenerarSubtitulos(SubtitulosRequest) returns (SubtitulosResponse);
+
+    // Estado de un trabajo de procesamiento de medios
+    rpc ObtenerEstadoTrabajo(TrabajoRequest) returns (TrabajoResponse);
+}
+
+// ── Servicio de Grafos (Base de Datos de Grafos) ───────────────────────────
+// Almacenamiento y consulta de relaciones entre entidades OSINT.
+service GraphService {
+    // Consultar nodos y relaciones con Cypher
+    rpc ConsultarNodo(ConsultaGrafoRequest) returns (ResultadoGrafoResponse);
+
+    // Agregar una relación entre entidades
+    rpc AgregarRelacion(RelacionRequest) returns (RelacionResponse);
+
+    // Agregar o actualizar un nodo de entidad
+    rpc UpsertNodo(NodoRequest) returns (NodoResponse);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Mensajes: Spider
+// ════════════════════════════════════════════════════════════════════════════
+
+message SemillaRequest {
+    string url_rss = 1;
+    int32  saltos_maximos = 2;      // Profundidad BFS (sobreescribe config si > 0)
+    repeated string servicios_objetivo = 3;  // ej. ["youtube", "peertube"]
+}
+
+message SemillaResponse {
+    string id_rastreo = 1;
+    bool   aceptada = 2;
+    string mensaje = 3;
+}
+
+message EstadoRastreoRequest {
+    string id_rastreo = 1;
+}
+
+message EstadoRastreoResponse {
+    string id_rastreo = 1;
+    enum Estado {
+        DESCONOCIDO = 0;
+        EN_COLA = 1;
+        RASTREANDO = 2;
+        COMPLETADO = 3;
+        ERROR = 4;
+    }
+    Estado estado = 2;
+    int32  urls_descubiertas = 3;
+    int32  urls_procesadas = 4;
+    int32  profundidad_actual = 5;
+}
+
+message DescubrimientoEvent {
+    string url = 1;
+    int32  profundidad = 2;
+    string tipo_contenido = 3;     // ej. "text/html", "application/rss+xml"
+    string idioma_detectado = 4;
+    int64  timestamp_unix = 5;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Mensajes: Evaluator
+// ════════════════════════════════════════════════════════════════════════════
+
+message DocumentoRequest {
+    string contenido_texto = 1;
+    string idioma_origen = 2;       // Código ISO 639: "en", "es", "qu", "ar", etc.
+    string url_fuente = 3;
+    map<string, string> metadatos = 4;
+}
+
+message EvaluacionResponse {
+    float  puntuacion_rigor = 1;    // 0.0 — 1.0
+    string resumen_evaluacion = 2;
+    repeated string conceptos_clave = 3;
+    repeated EntidadAcademica entidades = 4;
+    string idioma_detectado = 5;
+}
+
+message EntidadAcademica {
+    string nombre = 1;
+    string grado_academico = 2;     // "Magíster", "Doctor", etc.
+    string orcid = 3;
+    string afiliacion = 4;
+}
+
+message ConsultaRAGRequest {
+    string consulta = 1;
+    int32  top_k = 2;               // Número de fragmentos a retornar
+    string idioma_preferido = 3;
+}
+
+message ResultadoRAGResponse {
+    repeated FragmentoRAG fragmentos = 1;
+}
+
+message FragmentoRAG {
+    string contenido = 1;
+    string fuente_pdf = 2;
+    float  similitud = 3;
+    int32  pagina = 4;
+}
+
+message TraduccionRequest {
+    string texto_origen = 1;
+    string idioma_origen = 2;
+    string idioma_destino = 3;      // Por defecto: "es"
+}
+
+message TraduccionResponse {
+    string texto_traducido = 1;
+    float  confianza = 2;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Mensajes: Media
+// ════════════════════════════════════════════════════════════════════════════
+
+message FragmentoRequest {
+    string url_media = 1;
+    double tiempo_inicio = 2;       // Segundos
+    double tiempo_fin = 3;          // Segundos
+    string formato_salida = 4;      // "mp3", "opus", "wav"
+}
+
+message FragmentoResponse {
+    string id_trabajo = 1;
+    string ruta_archivo = 2;
+    bool   completado = 3;
+    string mensaje_error = 4;
+}
+
+message SubtitulosRequest {
+    string ruta_audio = 1;
+    string idioma_origen = 2;       // Idioma del audio original
+    string formato = 3;             // "vtt" o "srt"
+}
+
+message SubtitulosResponse {
+    string ruta_subtitulos = 1;
+    string formato = 2;
+    string idioma_destino = 3;      // Siempre "es" (español)
+    int32  lineas_generadas = 4;
+}
+
+message TrabajoRequest {
+    string id_trabajo = 1;
+}
+
+message TrabajoResponse {
+    string id_trabajo = 1;
+    enum EstadoTrabajo {
+        PENDIENTE = 0;
+        PROCESANDO = 1;
+        FINALIZADO = 2;
+        FALLIDO = 3;
+    }
+    EstadoTrabajo estado = 2;
+    float progreso = 3;            // 0.0 — 1.0
+    string mensaje = 4;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Mensajes: Graph
+// ════════════════════════════════════════════════════════════════════════════
+
+message ConsultaGrafoRequest {
+    string consulta_cypher = 1;
+    map<string, string> parametros = 2;
+}
+
+message ResultadoGrafoResponse {
+    repeated NodoGrafo nodos = 1;
+    repeated RelacionGrafo relaciones = 2;
+    int32 total_resultados = 3;
+}
+
+message NodoGrafo {
+    string id = 1;
+    string etiqueta = 2;           // "Hablante", "Fuente", "RecorteAudio", etc.
+    map<string, string> propiedades = 3;
+}
+
+message RelacionGrafo {
+    string id_origen = 1;
+    string id_destino = 2;
+    string tipo_relacion = 3;      // "CITA_A", "HABLA_EN", "PERTENECE_A", etc.
+    map<string, string> propiedades = 4;
+}
+
+message NodoRequest {
+    string etiqueta = 1;
+    map<string, string> propiedades = 2;
+    bool   upsert = 3;             // true = actualizar si existe
+}
+
+message NodoResponse {
+    string id_nodo = 1;
+    bool   creado = 2;
+    bool   actualizado = 3;
+}
+
+message RelacionRequest {
+    string id_nodo_origen = 1;
+    string id_nodo_destino = 2;
+    string tipo_relacion = 3;
+    map<string, string> propiedades = 4;
+}
+
+message RelacionResponse {
+    bool   creada = 1;
+    string mensaje = 2;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// Mensaje de Cita Académica (APA 7)
+// ════════════════════════════════════════════════════════════════════════════
+
+message CitaAPA7 {
+    repeated string autores = 1;    // Apellido, Iniciales
+    int32  anio = 2;
+    string titulo = 3;
+    string fuente = 4;              // Nombre del medio / revista
+    string url = 5;
+    string doi = 6;
+    string fecha_acceso = 7;        // Formato ISO 8601
+    string cadena_formateada = 8;   // Cita completa en formato APA 7
+}

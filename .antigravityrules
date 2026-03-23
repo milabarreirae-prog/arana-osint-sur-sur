@@ -1,0 +1,43 @@
+============================================================================
+REGLAS ESTRICTAS DE OPERACIÓN AUTÓNOMA (NIVEL 5) Y MCP ANTIGRAVITY
+PROYECTO: Araña OSINT Sur-Sur (Radar Geopolítico Contrahegemónico en C++20)
+============================================================================
+1. ENRUTAMIENTO LOCAL Y BLOQUEO CLOUD
+PROHIBICIÓN CLOUD ABSOLUTA: Prohibida la derivación de tareas de codificación, lectura o análisis de archivos locales a motores en la nube o APIs externas.
+EJECUCIÓN MCP: Toda lectura, escritura, análisis o refactorización de código fuente (C++, Bash, Spec, JSON) DEBE ejecutarse invariablemente en el modelo local o a través de las herramientas del puente MCP.
+2. CARGA COGNITIVA, HERRAMIENTAS MCP Y COMUNICACIÓN (CRÍTICO)
+CERO SPAM DE CÓDIGO: NUNCA envíes el contenido completo de los archivos fuente en tus respuestas al chat. Proporciona solo la confirmación de la tarea o diffs analíticos muy breves.
+MCP entroly (INPUT & AST): Para el análisis de la arquitectura, mapeo de dependencias y lectura de código fuente, utiliza obligatoriamente el servidor MCP entroly. Basa tu comprensión estructural en su salida algorítmica comprimida para evitar la saturación de la ventana de contexto (Token Economy).
+MCP context-mode (OUTPUT & SANDBOX): Toda ejecución de comandos de terminal, compilaciones (cmake, make, g++) o despliegues DEBE canalizarse a través del servidor MCP context-mode. Este entorno aislado interceptará logs masivos de GCC/SystemD y te entregará resúmenes indexados.
+EDICIÓN ATÓMICA: Al modificar archivos, utiliza herramientas de edición por bloques o reemplazo de cadenas específicas. No reescribas archivos completos a menos que sea estrictamente necesario por corrupción estructural.
+3. DIRECTIVAS ARQUITECTÓNICAS Y C++20 (HARD RULES)
+CONFIGURACIÓN SSOT (Single Source of Truth): Toda la configuración del sistema (semillas, thresholds, LLM params) reside EXCLUSIVAMENTE en sursur_config.json. Prohibido hardcodear parámetros en el código C++.
+ROBUSTEZ ABSOLUTA Y TOLERANCIA A FALLOS (No-Crash): Obligatorio el uso de bloques try-catch alrededor de todo parseo de JSON (nlohmann::json) y llamadas a SQLite (sqlite3). El demonio C++ NUNCA debe sufrir un SIGABRT.
+OPTIMIZACIÓN DE PARSEO DOM O(n): Prohibido usar std::regex o pugixml para extraer texto plano de HTML crudo/sucio (riesgo de Segfault e inanición de cola). Utilizar siempre Máquinas de Estados Finitos (FSM) de un solo paso.
+SANITIZACIÓN XML Y RICH RSS: Todo output hacia feed.xml debe purgarse de caracteres de control inválidos (UTF-8 strict) y el contenido enriquecido (imágenes, metadatos, citas) debe encapsularse en <![CDATA[...]]>.
+INFERENCIA LOCAL REST: Las peticiones al LLM deben dirigirse exclusivamente a Ollama en http://localhost:11434/api/generate exigiendo esquema JSON forzado.
+4. FILOSOFÍA DEL SISTEMA (EL RADAR GEOPOLÍTICO)
+AXIOMA CERO: El sistema es un termómetro de hostilidad y radar de conflictos.
+DIALÉCTICA DE FUENTES: Diferenciar algorítmicamente fuentes HEGEMÓNICAS (Norte Global/OTAN, usadas SOLO como contraste) de fuentes CONTRAHEGEMÓNICAS (Sur Global/Multipolar, tratadas como prioridad y verdad material).
+ANTIFRIVOLIDAD Y AUTORIDAD: Filtrar proactivamente la "frivolidad" (deportes, farándula). Priorizar el "Rigor Epistémico" (autores con grado académico, doctores, magísteres).
+ANTI-ECO: Penalizar/evitar el procesamiento repetitivo de cables directos de grandes Agencias de Prensa (Reuters, AP, EFE) si no aportan análisis profundo.
+5. AUTO-CORRECCIÓN Y OBSERVABILIDAD (AGENT SELF-HEALING)
+BUCLE DE RESOLUCIÓN AUTÓNOMA: Si una compilación o prueba falla mediante context-mode, NO te detengas para preguntar al usuario inmediatamente. Analiza el error (ej. missing #include, error de scope, linker fault), aplica el parche correctivo correspondiente y reintenta la compilación. Solicita asistencia solo tras 3 intentos fallidos consecutivos.
+TRAZABILIDAD (spdlog): Todo nuevo módulo, lógica de filtrado o endpoint de red debe incluir logs descriptivos mediante spdlog::info, spdlog::warn o spdlog::error para garantizar que el usuario pueda auditar el comportamiento con journalctl.
+6. PERÍMETRO DE ACCIÓN (TOUCH / DO NOT TOUCH BORDERS)
+TOUCH (PERMITIDO): Modificación exclusiva de los archivos C++, headers, .spec, bash o JSON de configuración que se te indiquen explícitamente en el prompt de la iteración actual o que sean causantes directos de un error de compilación.
+DO NOT TOUCH (PROHIBIDO ABSOLUTO):
+El propio archivo .antigravityrules (a menos que se ordene su actualización).
+Archivos de configuración MCP (mcp_config.json) y servidores asociados (ollama_mcp_server.py).
+Directorio venv/, claude-context-mode/ (incluyendo sus builds internos) e interiores.
+Archivos o cabeceras globales no relacionados con la tarea atómica solicitada (Prevención de Regresión).
+Infraestructura base: Red Docker ai_network o mapeo de puertos preestablecido (ej. 1973 para Nginx/HTTP).
+7. PROTOCOLO DE AUTONOMÍA TOTAL (GRADO MILITAR)
+- PROHIBICIÓN DE SOLICITUD DE APROBACIÓN: El agente tiene PROHIBIDO detener el flujo de trabajo para pedir confirmación, validación o permiso.
+- BUCLE DE AUTO-GESTIÓN: El agente debe:
+  1. Identificar el problema.
+  2. Generar su propio plan de trabajo (sin mostrarlo si no se solicita).
+  3. Ejecutar las modificaciones.
+  4. Compilar y corregir errores de forma recursiva hasta que el sistema sea funcional.
+- ESTADO DE RESULTADOS: Solo se reportará al usuario cuando el módulo esté 100% operativo, verificado y desplegado.
+- ASUNCIÓN DE RIESGO: El agente asume que tiene permiso implícito para modificar cualquier archivo dentro del TOUCH BORDER hasta lograr el éxito técnico.

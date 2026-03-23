@@ -1,0 +1,39 @@
+# ============================================================================
+# ARAÑA OSINT SUR-SUR — Configuración Recomendada de WSL2
+# ============================================================================
+# Este archivo debe ser creado o editado en Windows como:
+#   %USERPROFILE%\.wslconfig
+# (ej: C:\Users\TuUsuario\.wslconfig)
+#
+# Después de guardar, reiniciar WSL2 con:
+#   wsl --shutdown
+# ============================================================================
+
+[wsl2]
+# ── Memoria RAM ─────────────────────────────────────────────────────────────
+# Límite estricto para WSL2, dejando 4-6 GB libres para Windows 11 host.
+# El modelo LLM Q4_K_M consume ~4.8 GB + ~2 GB para el daemon y Neo4j.
+memory=10GB
+
+# ── Procesadores ────────────────────────────────────────────────────────────
+# Desbloquear el uso de todos los procesadores lógicos del Ryzen 9.
+# Ryzen 9 5900X = 24 (12 cores x 2 SMT), Ryzen 9 7950X = 32 (16 cores x 2 SMT)
+# Ajustar según tu modelo específico.
+processors=24
+
+# ── Swap Dinámico ───────────────────────────────────────────────────────────
+# Swap en disco NVMe para evitar OOM (Out of Memory) durante RAG pesado.
+# El swap se usa cuando la combinación de LLM + Spider + Neo4j excede los 10GB.
+swap=8GB
+
+# ── Networking ──────────────────────────────────────────────────────────────
+# Modo de red por defecto (NAT). Si necesitas acceso directo desde Windows
+# al daemon gRPC en WSL2, puedes cambiar a 'mirrored' (Windows 11 22H2+):
+# networkingMode=mirrored
+
+# ── Localización del disco virtual ──────────────────────────────────────────
+# Por defecto WSL2 almacena su disco virtual (ext4.vhdx) en:
+#   %LOCALAPPDATA%\Packages\...\LocalState\ext4.vhdx
+# Si tienes un segundo NVMe, puedes mover el disco para mayor velocidad:
+# [mount]
+# root=D:\WSL\

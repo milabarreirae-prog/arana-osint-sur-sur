@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araña OSINT Sur-Sur Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    <div class="glass-container">
+        <header>
+            <div class="logo">
+                <span class="icon">🕸️</span>
+                <h1>Motor OSINT <span>Sur-Sur</span></h1>
+            </div>
+            <div class="status-indicator">
+                <div class="pulse"></div>
+                <span id="daemon-status">En línea</span>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <section class="panel feed-panel">
+                <h2>🌐 Inteligencia Adquirida</h2>
+                <div id="feed-container">
+                    <p class="placeholder-text">Esperando extracciones del núcleo EvaluatorLLM...</p>
+                </div>
+            </section>
+            
+            <section class="panel system-panel">
+                <h2>⚡ Telemetría Neural</h2>
+                <div class="telemetry-grid">
+                    <div class="telemetry-card">
+                        <h3>Nodos Grafo (Neo4j/SQLite)</h3>
+                        <div class="value" id="node-count">0</div>
+                    </div>
+                    <div class="telemetry-card">
+                        <h3>URLs Crawler</h3>
+                        <div class="value" id="url-count">0</div>
+                    </div>
+                </div>
+
+                <h2>🖥️ Live Log (SSE)</h2>
+                <div class="terminal" id="terminal-log">
+                    [Sistema] Iniciando enlace Server-Sent Events con el demonio C++...
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
