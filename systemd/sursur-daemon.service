@@ -10,7 +10,7 @@ User=root
 Group=root
 
 # Ejecutable del demonio
-ExecStart=/usr/sbin/sur-sur-daemon --config=/etc/sursur/sursur_config.ini
+ExecStart=/usr/sbin/sur-sur-daemon --config=/etc/sursur/sursur_config.json
 
 # Apagado graceful
 ExecStop=/bin/kill -SIGTERM $MAINPID

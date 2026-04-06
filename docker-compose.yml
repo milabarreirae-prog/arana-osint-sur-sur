@@ -1,0 +1,29 @@
+name: sursur
+
+services:
+  daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sursur-daemon
+    restart: unless-stopped
+    ports:
+      - "1973:1973"
+    volumes:
+      # Persistent SQLite database
+      - sursur-db:/var/lib/sursur/db
+      # Downloaded/transcoded media
+      - sursur-media:/var/lib/sursur/media
+      # Bind-mount config for easy editing without rebuild
+      - ./sursur_config.json:/etc/sursur/sursur_config.json:ro
+    environment:
+      # Point to Ollama running on the host
+      # Linux: use host.docker.internal; on Docker Desktop (Mac/Win) this works automatically
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    # Required for host.docker.internal resolution on Linux
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  sursur-db:
+  sursur-media:

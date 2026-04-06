@@ -1,0 +1,31 @@
+# Build, Binarios y Paquetes
+build/
+redhat-linux-build/
+rpmbuild/
+*.o
+*.a
+*.so
+*.rpm
+sur-sur-daemon
+test-spider
+
+# Bases de datos y telemetría local
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.tmp
+ui/ollama_log.json
+ui/status.json
+ui/feed.xml
+media/feed.xml
+
+# Entornos virtuales e IDEs
+.venv/
+venv/
+node_modules/
+.vscode/
+
+# Archivos de SO
+.DS_Store
+Thumbs.db

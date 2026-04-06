@@ -43,7 +43,44 @@ El software está diseñado para ejecutarse en entornos Linux empresariales o en
 
 ## **🚀 Despliegue y Operación**
 
-### **1\. Compilación y Despliegue Automatizado**
+### **1\. Despliegue con Docker (Recomendado)**
+
+El sistema está disponible como un único contenedor tipo *appliance* que ejecuta tanto el demonio C++ como Nginx en el mismo proceso. Ollama se ejecuta en el host.
+
+**Requisitos previos:**
+
+- Docker + Docker Compose instalados
+- Ollama corriendo en el host con el modelo cargado:
+  ```bash
+  ollama pull qwen2.5-coder:7b
+  ollama serve
+  ```
+
+**Arranque:**
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+El Centro de Mando queda accesible en **http://localhost:1973/**.
+
+**Ver logs:**
+
+```bash
+docker compose logs -f daemon
+```
+
+**Detener:**
+
+```bash
+docker compose down           # Mantiene la BD SQLite
+docker compose down -v        # Borra datos persistentes (reset completo)
+```
+
+**Configuración:** Edita `sursur_config.json` en la raíz del proyecto y reinicia el contenedor. El archivo se monta como bind-mount (no requiere rebuild).
+
+### **2\. Compilación y Despliegue Automatizado (Bare Metal / WSL2)**
 
 El proyecto cuenta con un script de despliegue atómico que detiene el servicio, compila el binario en 4 hilos, migra la configuración y reinicia el demonio.
 
@@ -51,7 +88,7 @@ Debe ejecutarse como usuario root:
 
 bash deploy\_y\_test\_shutdown.sh
 
-### **2\. Estructura de Directorios del Sistema**
+### **3\. Estructura de Directorios del Sistema**
 
 Tras el despliegue, la infraestructura se organiza en las siguientes rutas estándar de Linux:
 
@@ -60,7 +97,7 @@ Tras el despliegue, la infraestructura se organiza en las siguientes rutas está
 * /var/lib/sursur/db/graph.db: Base de datos histórica SQLite3.  
 * /var/lib/sursur/ui/: Raíz documental de Nginx. Contiene el Dashboard (index.html), telemetría (ollama\_log.json) y el archivo de salida final (feed.xml).
 
-### **3\. Observabilidad**
+### **4\. Observabilidad**
 
 El Centro de Mando está accesible vía HTTP (ej. http://localhost:1973/).
 
