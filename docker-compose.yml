@@ -17,13 +17,20 @@ services:
       # Bind-mount config for easy editing without rebuild
       - ./sursur_config.json:/etc/sursur/sursur_config.json:ro
     environment:
-      # Point to Ollama running on the host
-      # Linux: use host.docker.internal; on Docker Desktop (Mac/Win) this works automatically
-      - OLLAMA_HOST=http://host.docker.internal:11434
-    # Required for host.docker.internal resolution on Linux
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      # Point to the ollama_central container on the ai_network
+      - OLLAMA_HOST=http://ollama_central:11434
+    # Connect to the external ollama network
+    networks:
+      - sursur-net
+      - ai_network
 
 volumes:
   sursur-db:
   sursur-media:
+
+
+networks:
+  sursur-net:
+    driver: bridge
+  ai_network:
+    external: true
