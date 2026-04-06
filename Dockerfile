@@ -1,10 +1,9 @@
 FROM fedora:39 AS builder
 
 RUN dnf install -y \
-    gcc-c++ cmake make pkg-config \
+    gcc-c++ cmake make pkg-config wget tar xz git \
     libcurl-devel sqlite-devel pugixml-devel \
-    spdlog-devel nlohmann-json-devel \
-    CLI11-devel fmt-devel inih-devel \
+    spdlog-devel fmt-devel inih-devel \
     && dnf clean all
 
 WORKDIR /build
@@ -20,7 +19,7 @@ FROM fedora:39 AS runtime
 # Install runtime libs + nginx
 RUN dnf install -y \
     libcurl sqlite-libs pugixml \
-    spdlog fmt inih \
+    spdlog fmt inih inih-cpp \
     nginx \
     && dnf clean all \
     && mkdir -p /etc/sursur /var/lib/sursur/{db,media,ui} \
