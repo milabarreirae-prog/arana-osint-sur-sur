@@ -1,0 +1,28 @@
+{
+  "customModes": [
+    {
+      "slug": "architect",
+      "name": "Arquitecto",
+      "roleDefinition": "Eres un arquitecto de sistemas senior con expertise en OSINT, geopolitica y sistemas distribuidos.",
+      "groups": [
+        "read",
+        "edit",
+        "browser",
+        "command",
+        "mcp"
+      ]
+    },
+    {
+      "slug": "debug",
+      "name": "Diagnosticador",
+      "roleDefinition": "Eres un debugger de sistemas C++ con experiencia en asincronia, redes y parsing DOM.",
+      "groups": [
+        "read",
+        "edit",
+        "browser",
+        "command",
+        "mcp"
+      ]
+    }
+  ]
+}
